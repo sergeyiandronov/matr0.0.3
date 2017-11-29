@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <sstream>
+#include <fstream>
 using namespace std;
 void destroy( float ** elements,
               unsigned int rows )
@@ -275,30 +276,34 @@ bool get_size(unsigned int& columns,
     }
     return false;
 }
-FILE *getfilename(){
-	FILE *result;
+ ifstream getfilename(){
+	
 	string fn;
 	getline(cin,fn);
+	ofstream result1(fn);
+	
+	result1<<"gdfghfh\n";
+	result1.close();
+	ifstream result(fn);
+    return result;
 	
 	
-	result=fopen(fn.c_str(),"w");
-	fprintf(result,"1");
-	fclose(result);
-	result=fopen(fn.c_str(),"r");
-	return result;
+	
+	
+
+	
 }
 int main()
 {
-	FILE *m1;
-	FILE *m2;
+	ifstream m1=getfilename();
+	ifstream m2=getfilename();
     float** matrix1;
     float** matrix2;
     float** matrix3;
     
-    m1=getfilename();
-    m2=getfilename();
-    char c;
-    c=fgetc(m1);
+
+    string c;
+    getline(m1,c);
     cout<<c;
     
 
