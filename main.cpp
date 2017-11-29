@@ -228,7 +228,8 @@ float** reverse(float** matrix,
     newrows = rows;
     return result;
 }
-bool get_matrix(float**& matrix,
+bool get_matrix(ifstream matrfile,
+                float**& matrix,
                 unsigned int ncolumns,
                 unsigned int nrows)
 {
@@ -236,7 +237,7 @@ bool get_matrix(float**& matrix,
 
     for (unsigned int j = 0; j < nrows; j++) {
         string new_row;
-        getline(cin, new_row);
+        getline(matrfile, new_row);
         istringstream stream(new_row);
         for (unsigned int i = 0; i < ncolumns; i++) {
             if (!(stream >> matrix[j][i])) {
@@ -263,20 +264,21 @@ void cout_matrix(float** matrix,
         cout << "\n";
     }
 }
-bool get_size(unsigned int& columns,
+bool get_size(ifstream matrfile,
+              unsigned int& columns,
               unsigned int& rows)
 {
     string header;
 
     char razdel;
-    getline(cin, header);
+    getline(matrfile, header);
     istringstream str(header);
     if ((str >> rows) && (str >> razdel) && (str >> columns) && (razdel == ',')) {
         return true;
     }
     return false;
 }
- ifstream getfilename(){
+ bool getfilename(ifstream& fs){
 	
 	string fn;
 	getline(cin,fn);
@@ -295,18 +297,15 @@ bool get_size(unsigned int& columns,
 }
 int main()
 {
-	ifstream m1=getfilename();
-	ifstream m2=getfilename();
+	ifstream m1;
+	ifstream m2;
     float** matrix1;
     float** matrix2;
     float** matrix3;
     
-
-    string c;
-    getline(m1,c);
-    cout<<c;
+   
     
-
+    m1=getfilename();
     char op;
     unsigned int columns1, rows1, columns2, rows2, columns3, rows3;
     if (get_size(columns1, rows1) && get_matrix(matrix1, columns1, rows1)) {
