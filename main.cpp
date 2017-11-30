@@ -279,7 +279,7 @@ bool get_size(fstream matrfile,
     return false;
 }
  bool getcommandifile(ifstream& fs1,ifstream& fs2,char &op){
-	op="q";
+	op='q';
 	string fn;
 	if(!getline(cin,fn)){
 	   
@@ -291,19 +291,19 @@ bool get_size(fstream matrfile,
 	string name2="";
     char hop;
     while(sfn>>hop){
-        if (hop!="+"&&hop!="-"&&hop!="T"&&hop!="R"&&hop!="*"){
+        if (hop!='+'&&hop!='-'&&hop!='T'&&hop!='R'&&hop!='*'){
             name1+=hop;
         }
-        if (hop=="+"||hop=="-"||hop=="*"){
+        if (hop=='+'||hop=='-'||hop=='*'){
             op=hop;
             while(sfn>>hop){
-                 if (hop!="+"&&hop!="-"&&hop!="T"&&hop!="R"&&hop!="*"){
+                 if (hop!='+'&&hop!='-'&&hop!='T'&&hop!='R'&&hop!='*'){
                  name2+=hop;
                  }   
             }
             break;
         }
-        if(hop=="T"||hop=="R"){
+        if(hop=='T'||hop=='R'){
             op=hop;
             break;
         }
@@ -316,13 +316,29 @@ bool get_size(fstream matrfile,
     if(name2!=""){
         fs2.open(name2);
     }
-	if(fs1.is_open()&&fs2.is_open()&&op!="q"){
+	if(fs1.is_open()&&fs2.is_open()&&op!='q'){
 	    return true;
 	}else{
 	    return false;
 	}
 	
 void finit(){
+ofstream fout;
+	fout.open("A.txt");
+	fout << "3, 3\n2 2 2\n2 2 2\n2 2 2";
+	fout.close();
+
+	fout.open("B.txt");
+	fout << "3, 3\n1 1 1\n1 1 1\n1 1 1";
+	fout.close();
+
+	fout.open("C.txt");
+	fout << "3, 3\n1 2 2\n0 4 4\n0 4 0";
+	fout.close();
+
+	fout.open("D.txt");
+	fout << "3, 3\n1 2 3\n4 5 6\n7 8 9";
+	fout.close();
     
 }
 	
