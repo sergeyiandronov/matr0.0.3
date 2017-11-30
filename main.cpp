@@ -278,16 +278,41 @@ bool get_size(ifstream matrfile,
     }
     return false;
 }
- bool getfilename(ifstream& fs){
-	
+ bool getcommandifile(ifstream& fs1,ifstream& fs2,char &op){
+	op="q";
 	string fn;
-	getline(cin,fn);
-	ofstream result1(fn);
+	if(!getline(cin,fn)){
+	    cout<<"An error has occured while reading input data";
+	    
+	    exit(0);
+	}
+	istringstream sfn(fn);
+	string name1;
+	string name2;
+    char hop;
+    while(sfn>>hop){
+        if (hop!="+"&&hop!="-"&&hop!="T"&&hop!="R"&&hop!="*"){
+            name1+=hop;
+        }
+        if (hop=="+"||hop=="-"||hop=="*"){
+            op=hop;
+            while(sfn>>hop){
+                 if (hop!="+"&&hop!="-"&&hop!="T"&&hop!="R"&&hop!="*"){
+                 name2+=hop;
+                 }   
+            }
+            break;
+        }
+        if(hop=="T"||hop=="R"){
+            op=hop;
+            break;
+        }
+        
+        }
+    }
 	
-	result1<<"gdfghfh\n";
-	result1.close();
-	ifstream result(fn);
-    return result;
+	
+
 	
 	
 	
@@ -297,7 +322,7 @@ bool get_size(ifstream matrfile,
 }
 int main()
 {
-	ifstream m1;
+	fstream m1;
 	ifstream m2;
     float** matrix1;
     float** matrix2;
