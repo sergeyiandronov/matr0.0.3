@@ -369,12 +369,9 @@ int main()
          
     unsigned int columns1, rows1, columns2, rows2, columns3, rows3;
     if (get_size(m1,columns1, rows1) && get_matrix(m1,matrix1, columns1, rows1)) {
-        string com;
+        
 
-        getline(cin, com);
-        istringstream stream(com);
-        if (stream >> op) {
-            switch (op) {
+        switch (op) {
                 case 'T':
                     matrix3 = transplate(matrix1, columns1, rows1, columns3, rows3);
                     break;
@@ -395,17 +392,13 @@ int main()
                 destroy(matrix1,rows1);
                 exit(0);
             }
-            else if (matrix3 == nullptr) {
+            else if (matrix3 == nullptr&&(op=='T'||op=='R')) {
                 cout << "There is no reverse matrix.";
 
                 destroy(matrix1,rows1);
                 exit(0);
             }
-        }
-        else {
-            cout << "An error has occured while reading input data.";
-            exit(0);
-        }
+        
     }
     else {
         cout << "An error has occured while reading input data.";
