@@ -52,9 +52,11 @@ float det(float** matrix,
                     if (x == j) {
                         k = 1;
                     }
-                    minor[y][x] = matrix[y + 1][x + k];
-                }
+                    minor[y][x]= matrix[y + 1][x + k]; cout<<minor[y][x]<<" ";
+                }cout<<"\n";
             }
+            double k0= det(minor, columns - 1, rows - 1);
+           
             switch (j % 2) {
                 case 0:
                     result += matrix[0][j] * det(minor, columns - 1, rows - 1);
@@ -198,16 +200,18 @@ float** transplate(float** matrix,
     newrows = columns;
     return result;
 }
-float** reverse(float** matrix,
+float** reverse(float** &matrix,
                 unsigned int columns,
                 unsigned int rows,
                 unsigned int& newcolumns,
                 unsigned int& newrows)
 {
     float** result;
-    if (det(matrix, columns, rows) == 0) {
+    double dn=det(matrix,columns,rows);
+    if (dn == 0) {
 
         result = nullptr;
+        
         return result;
     }
     if(columns==rows&&rows==1){
@@ -218,7 +222,7 @@ float** reverse(float** matrix,
     float** a = algebraic_matrix(matrix, columns, rows);
 
     a = transplate(a, columns, rows, newcolumns, newrows);
-    float d=det(matrix,columns,rows);
+    double d=det(matrix,columns,rows);
     for (unsigned int j = 0; j < rows; j++) {
         for (unsigned int i = 0; i < columns; i++) {
             result[j][i] = a[j][i] / d;
@@ -281,11 +285,11 @@ bool get_size(ifstream& matrfile,
  bool getcommandifile(ifstream& fs1,ifstream& fs2,char &op){
 	op='q';
 	string fn;
-	if(!getline(cin,fn)){
+	getline(cin,fn);
 	   
-	    return false;   
+	       
      
-	}
+	
 	istringstream sfn(fn);
 	string name1="";
 	string name2="";
@@ -316,7 +320,9 @@ bool get_size(ifstream& matrfile,
     if(name2!=""){
         fs2.open(name2);
     }
-	if(fs1.is_open()&&fs2.is_open()&&op!='q'){
+	if(fs1.is_open()&&(op=='T'||op=='R')){
+	    return true;
+	}else if(fs1.is_open()&&fs2.is_open()&&op!='q'){
 	    return true;
 	}else{
 	    return false;
@@ -361,6 +367,7 @@ int main()
     char op;
     finit();
     if(!getcommandifile(m1,m2,op)){
+        
         cout<<"An error has occured while reading input data";
         exit(0);
     }
@@ -377,6 +384,7 @@ int main()
                     break;
                 case 'R':
                     matrix3 = reverse(matrix1, columns1, rows1, columns3, rows3);
+                     
                     break;
                 default:
                     if (op != '+' && op != '-' && op != '*') {
@@ -387,7 +395,7 @@ int main()
             }
             if (matrix3 != nullptr && (op == 'T' || op == 'R')) {
                 cout_matrix(matrix3, columns3, rows3);
-             
+                
                 destroy(matrix3,rows3);
                 destroy(matrix1,rows1);
                 exit(0);
