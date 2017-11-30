@@ -228,7 +228,7 @@ float** reverse(float** matrix,
     newrows = rows;
     return result;
 }
-bool get_matrix(fstream matrfile,
+bool get_matrix(ifstream matrfile,
                 float**& matrix,
                 unsigned int ncolumns,
                 unsigned int nrows)
@@ -264,14 +264,14 @@ void cout_matrix(float** matrix,
         cout << "\n";
     }
 }
-bool get_size(fstream matrfile,
+bool get_size(ifstream matrfile,
               unsigned int& columns,
               unsigned int& rows)
 {
     string header;
 
     char razdel;
-    getline(matrfile, header);
+    getline(cin, header);
     istringstream str(header);
     if ((str >> rows) && (str >> razdel) && (str >> columns) && (razdel == ',')) {
         return true;
@@ -308,7 +308,7 @@ bool get_size(fstream matrfile,
             break;
         }
         
-        }
+        
     }
     if(name1!=""){
         fs1.open(name1);
@@ -321,6 +321,7 @@ bool get_size(fstream matrfile,
 	}else{
 	    return false;
 	}
+ }
 	
 void finit(){
 ofstream fout;
@@ -347,11 +348,11 @@ ofstream fout;
 	
 
 	
-}
+
 int main()
 {
-	fstream m1;
-	fstream m2;
+	ifstream m1;
+	ifstream m2;
     float** matrix1;
     float** matrix2;
     float** matrix3;
@@ -360,10 +361,12 @@ int main()
     
     
     char op;
+    finit();
     if(!getcommandifile(m1,m2,op)){
         cout<<"An error has occured while reading input data";
         exit(0);
     }
+         
     unsigned int columns1, rows1, columns2, rows2, columns3, rows3;
     if (get_size(m1,columns1, rows1) && get_matrix(m1,matrix1, columns1, rows1)) {
         
@@ -433,5 +436,5 @@ int main()
         cout << "An error has occured while reading input data.";
         exit(0);
     }
-
+   
 }
