@@ -304,6 +304,8 @@ bool getcommandifile(ifstream& fs1,ifstream& fs2,char &op){
             while(sfn>>hop){
                 if (hop!='+'&&hop!='-'&&hop!='T'&&hop!='R'&&hop!='*'){
                     name2+=hop;
+                }else{
+                    return false;
                 }
             }
             break;
@@ -399,12 +401,14 @@ int main()
             
             destroy(matrix3,rows3);
             destroy(matrix1,rows1);
+           
             exit(0);
         }
         else if (matrix3 == nullptr&&(op=='T'||op=='R')) {
             cout << "There is no reverse matrix.";
             
             destroy(matrix1,rows1);
+           
             exit(0);
         }
         
@@ -430,12 +434,14 @@ int main()
             destroy(matrix3,rows3);
             destroy(matrix1,rows1);
             destroy(matrix2,rows2);
+           
         }
         else if (matrix3 == nullptr) {
             cout << "Wrong matrixes";
             
             destroy(matrix2,rows2);
             destroy(matrix1,rows1);
+          
             exit(0);
         }
     }
@@ -445,4 +451,3 @@ int main()
     }
     
 }
-
