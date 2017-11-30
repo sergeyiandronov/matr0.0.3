@@ -228,7 +228,7 @@ float** reverse(float** matrix,
     newrows = rows;
     return result;
 }
-bool get_matrix(ifstream matrfile,
+bool get_matrix(fstream matrfile,
                 float**& matrix,
                 unsigned int ncolumns,
                 unsigned int nrows)
@@ -264,7 +264,7 @@ void cout_matrix(float** matrix,
         cout << "\n";
     }
 }
-bool get_size(ifstream matrfile,
+bool get_size(fstream matrfile,
               unsigned int& columns,
               unsigned int& rows)
 {
@@ -282,7 +282,7 @@ bool get_size(ifstream matrfile,
 	op="q";
 	string fn;
 	if(!getline(cin,fn)){
-	    cout<<"An error has occured while reading input data";
+	   
 	    return false;   
      
 	}
@@ -322,7 +322,9 @@ bool get_size(ifstream matrfile,
 	    return false;
 	}
 	
-
+void finit(){
+    
+}
 	
 	
 	
@@ -333,22 +335,24 @@ bool get_size(ifstream matrfile,
 int main()
 {
 	fstream m1;
-	ifstream m2;
+	fstream m2;
     float** matrix1;
     float** matrix2;
     float** matrix3;
     
    
     
-    m1=getfilename();
+    
     char op;
+    if(!getcommandifile(m1,m2,op)){
+        cout<<"An error has occured while reading input data";
+        exit(0);
+    }
     unsigned int columns1, rows1, columns2, rows2, columns3, rows3;
-    if (get_size(columns1, rows1) && get_matrix(matrix1, columns1, rows1)) {
-        string com;
+    if (get_size(m1,columns1, rows1) && get_matrix(m1,matrix1, columns1, rows1)) {
+        
 
-        getline(cin, com);
-        istringstream stream(com);
-        if (stream >> op) {
+                
             switch (op) {
                 case 'T':
                     matrix3 = transplate(matrix1, columns1, rows1, columns3, rows3);
@@ -376,17 +380,14 @@ int main()
                 destroy(matrix1,rows1);
                 exit(0);
             }
-        }
-        else {
-            cout << "An error has occured while reading input data.";
-            exit(0);
-        }
+        
+        
     }
     else {
         cout << "An error has occured while reading input data.";
         exit(0);
     }
-    if (get_size(columns2, rows2) && get_matrix(matrix2, columns2, rows2)) {
+    if (get_size(m2,columns2, rows2) && get_matrix(m2,matrix2, columns2, rows2)) {
         switch (op) {
             case '+':
                 matrix3 = sum(matrix1, columns1, rows1, matrix2, columns2, rows2, columns3, rows3);
