@@ -283,12 +283,12 @@ bool get_size(ifstream matrfile,
 	string fn;
 	if(!getline(cin,fn)){
 	    cout<<"An error has occured while reading input data";
-	    
-	    exit(0);
+	    return false;   
+     
 	}
 	istringstream sfn(fn);
-	string name1;
-	string name2;
+	string name1="";
+	string name2="";
     char hop;
     while(sfn>>hop){
         if (hop!="+"&&hop!="-"&&hop!="T"&&hop!="R"&&hop!="*"){
@@ -310,7 +310,17 @@ bool get_size(ifstream matrfile,
         
         }
     }
-	
+    if(name1!=""){
+        fs1.open(name1);
+    }
+    if(name2!=""){
+        fs2.open(name2);
+    }
+	if(fs1.is_open()&&fs2.is_open()&&op!="q"){
+	    return true;
+	}else{
+	    return false;
+	}
 	
 
 	
