@@ -114,7 +114,7 @@ float** sum(float** matrix1,
 {
     float** result;
     if (columns1 != columns2 || rows1 != rows2) {
-        result = NULL;
+        result = nullptr;
         return result;
     }
     result = create_matrix(columns1, rows1);
@@ -138,7 +138,7 @@ float** sub(float** matrix1,
 {
     float** result;
     if (columns1 != columns2 || rows1 != rows2) {
-        result = NULL;
+        result = nullptr;
         return result;
     }
     result = create_matrix(columns1, rows1);
@@ -163,7 +163,7 @@ float** mul(float** matrix1,
 {
     float** result;
     if (columns1 != rows2) {
-        result = NULL;
+        result = nullptr;
         return result;
     }
     result = create_matrix(columns2, rows1);
@@ -207,11 +207,11 @@ float** reverse(float** matrix,
     float** result;
     if (det(matrix, columns, rows) == 0) {
 
-        result = NULL;
+        result = nullptr;
         return result;
     }
     if(columns==rows&&rows==1){
-        result=NULL;
+        result=nullptr;
         return result;
     }
     result = create_matrix(columns, rows);
@@ -228,7 +228,7 @@ float** reverse(float** matrix,
     newrows = rows;
     return result;
 }
-bool get_matrix(ifstream matrfile,
+bool get_matrix(ifstream& matrfile,
                 float**& matrix,
                 unsigned int ncolumns,
                 unsigned int nrows)
@@ -264,14 +264,14 @@ void cout_matrix(float** matrix,
         cout << "\n";
     }
 }
-bool get_size(ifstream matrfile,
+bool get_size(ifstream& matrfile,
               unsigned int& columns,
               unsigned int& rows)
 {
     string header;
 
     char razdel;
-    getline(cin, header);
+    getline(matrfile, header);
     istringstream str(header);
     if ((str >> rows) && (str >> razdel) && (str >> columns) && (razdel == ',')) {
         return true;
@@ -352,12 +352,10 @@ ofstream fout;
 int main()
 {
 	ifstream m1;
-	ifstream m2;
+	ifstream  m2;
     float** matrix1;
     float** matrix2;
     float** matrix3;
-    
-   
     
     
     char op;
@@ -366,12 +364,16 @@ int main()
         cout<<"An error has occured while reading input data";
         exit(0);
     }
+       
+    
          
     unsigned int columns1, rows1, columns2, rows2, columns3, rows3;
     if (get_size(m1,columns1, rows1) && get_matrix(m1,matrix1, columns1, rows1)) {
-        
+        string com;
 
-                
+        getline(cin, com);
+        istringstream stream(com);
+        if (stream >> op) {
             switch (op) {
                 case 'T':
                     matrix3 = transplate(matrix1, columns1, rows1, columns3, rows3);
@@ -386,21 +388,24 @@ int main()
                     }
                     break;
             }
-            if (matrix3 != NULL && (op == 'T' || op == 'R')) {
+            if (matrix3 != nullptr && (op == 'T' || op == 'R')) {
                 cout_matrix(matrix3, columns3, rows3);
              
                 destroy(matrix3,rows3);
                 destroy(matrix1,rows1);
                 exit(0);
             }
-            else if (matrix3 == NULL) {
+            else if (matrix3 == nullptr) {
                 cout << "There is no reverse matrix.";
 
                 destroy(matrix1,rows1);
                 exit(0);
             }
-        
-        
+        }
+        else {
+            cout << "An error has occured while reading input data.";
+            exit(0);
+        }
     }
     else {
         cout << "An error has occured while reading input data.";
@@ -418,13 +423,13 @@ int main()
                 matrix3 = mul(matrix1, columns1, rows1, matrix2, columns2, rows2, columns3, rows3);
                 break;
         }
-        if (matrix3 != NULL) {
+        if (matrix3 != nullptr) {
             cout_matrix(matrix3, columns3, rows3);
             destroy(matrix3,rows3);
             destroy(matrix1,rows1);
             destroy(matrix2,rows2);
         }
-        else if (matrix3 == NULL) {
+        else if (matrix3 == nullptr) {
             cout << "Wrong matrixes";
 
             destroy(matrix2,rows2);
